@@ -1,0 +1,28 @@
+.repository__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  position: relative;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(240 5.9% 90%);
+  cursor: pointer;
+}
+.repository__section:hover {
+  background-color: hsl(240 4.8% 95.9%);
+  transition: all 0.3s;
+}
+.repository__title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.repository__description {
+  color: grey;
+  font-size: 0.9rem;
+}
+.repository__details {
+  color: grey;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+}

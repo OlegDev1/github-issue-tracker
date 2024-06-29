@@ -16,13 +16,21 @@ type PaginationProps = {
     totalRepos: number;
     isLoading: boolean;
   };
+  searchParams: URLSearchParams;
 };
 
-export default function PageSwitching({ page, setSearchParams, userRepos }: PaginationProps) {
+export default function PageSwitching({
+  page,
+  setSearchParams,
+  userRepos,
+  searchParams,
+}: PaginationProps) {
   if (userRepos.isLoading) return <></>;
 
   const totalPages = Math.ceil(userRepos.totalRepos / 30);
   const paginationElements = [undefined, undefined, undefined];
+
+  const searchParamsObj = Object.fromEntries(searchParams.entries());
 
   return (
     <Pagination className="pagination">
@@ -31,7 +39,7 @@ export default function PageSwitching({ page, setSearchParams, userRepos }: Pagi
           <PaginationItem>
             <PaginationPrevious
               size="default"
-              onClick={() => setSearchParams({ page: String(page - 1) })}
+              onClick={() => setSearchParams({ ...searchParamsObj, page: String(page - 1) })}
             />
           </PaginationItem>
         )}
@@ -46,7 +54,9 @@ export default function PageSwitching({ page, setSearchParams, userRepos }: Pagi
               ) : (
                 <PaginationLink
                   size="default"
-                  onClick={() => setSearchParams({ page: String(page + index) })}>
+                  onClick={() =>
+                    setSearchParams({ ...searchParamsObj, page: String(page + index) })
+                  }>
                   {page + index}
                 </PaginationLink>
               )}
@@ -62,7 +72,7 @@ export default function PageSwitching({ page, setSearchParams, userRepos }: Pagi
             <PaginationItem>
               <PaginationLink
                 size="default"
-                onClick={() => setSearchParams({ page: String(totalPages) })}>
+                onClick={() => setSearchParams({ ...searchParamsObj, page: String(totalPages) })}>
                 {totalPages}
               </PaginationLink>
             </PaginationItem>
@@ -73,7 +83,7 @@ export default function PageSwitching({ page, setSearchParams, userRepos }: Pagi
           <PaginationItem>
             <PaginationNext
               size="default"
-              onClick={() => setSearchParams({ page: String(page + 1) })}
+              onClick={() => setSearchParams({ ...searchParamsObj, page: String(page + 1) })}
             />
           </PaginationItem>
         )}

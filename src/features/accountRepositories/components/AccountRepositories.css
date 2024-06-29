@@ -2,3 +2,8 @@
   position: absolute;
   top: 40%;
 }
+.repositories__list {
+  display: grid;
+  grid-auto-rows: 130px;
+  gap: 0.5rem;
+}
