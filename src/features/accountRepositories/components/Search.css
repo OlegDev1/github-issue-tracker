@@ -4,7 +4,18 @@
   gap: 0.5rem;
   margin-top: 0.7rem;
 }
-.searchBar__input {
-  width: 40% !important;
+.searchBar__input-input {
   border: 1px solid rgb(190, 190, 190) !important;
+  height: 40px !important;
+}
+.searchBar__cancel-button {
+  position: absolute;
+  top: 20%;
+  left: 93%;
+  cursor: pointer;
+}
+.searchBar__input {
+  position: relative;
+  width: 40%;
+  height: 40px;
 }
