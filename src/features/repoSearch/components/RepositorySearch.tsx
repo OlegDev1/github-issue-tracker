@@ -9,7 +9,7 @@ export default function RepositorySearch() {
   const navigate = useNavigate();
 
   function handleSubmit() {
-    navigate(`/repositories/${searchInput}?page=1`);
+    navigate(`/users/${searchInput}?page=1`);
   }
   return (
     <main className="main">

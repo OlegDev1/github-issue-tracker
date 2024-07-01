@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import fetchRepositoryIssues from "../utils/fetchRepositoryIssues";
 import { Spinner } from "../../../components/ui/loadingSpinner";
+import "./RepositoryIssues.css";
+import Issue from "./Issue";
+import IssueData from "../types/issue.interface";
 
 export default function RepositoryIssues({ user, repo, page }) {
   const { data, isPending, isError } = useQuery({
@@ -12,9 +15,9 @@ export default function RepositoryIssues({ user, repo, page }) {
   if (isError) return <h1>Error</h1>;
 
   return (
-    <ul>
-      {data.map((item) => (
-        <li>{item.title}</li>
+    <ul className="issues__list">
+      {data.map((item: IssueData) => (
+        <Issue issue={item} />
       ))}
     </ul>
   );
