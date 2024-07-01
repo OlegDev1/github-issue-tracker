@@ -1,0 +1,12 @@
+.issues__nav {
+  display: flex;
+}
+.nav__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.nav__firstSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

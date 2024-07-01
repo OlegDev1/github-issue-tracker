@@ -5,10 +5,10 @@ import "./RepositoryIssues.css";
 import Issue from "./Issue";
 import IssueData from "../types/issue.interface";
 
-export default function RepositoryIssues({ user, repo, page }) {
+export default function RepositoryIssues({ user, repo, page, status }) {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["repositoryIssues", user, repo, page],
-    queryFn: () => fetchRepositoryIssues(user, repo, page),
+    queryKey: ["repositoryIssues", user, repo, page, status],
+    queryFn: () => fetchRepositoryIssues(user, repo, page, status),
   });
 
   if (isPending) return <Spinner size="large" className="loading__spinner" />;

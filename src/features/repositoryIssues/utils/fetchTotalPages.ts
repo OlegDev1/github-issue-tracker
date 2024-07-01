@@ -1,8 +1,14 @@
 import axios from "axios";
 
-export default async function fetchTotalPages(user, repo): Promise<number> {
+export default async function fetchTotalPages(
+  user,
+  repo,
+  status: "opened" | "closed"
+): Promise<number> {
   const res = await axios.get(
-    `https://api.github.com/search/issues?q=repo:${user}/${repo}+is:issue+is:open&per_page=1`
+    `https://api.github.com/search/issues?q=repo:${user}/${repo}+is:issue+is:${
+      status === "opened" ? "open" : "closed"
+    }&per_page=1`
   );
   return res.data.total_count;
 }
