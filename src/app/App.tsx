@@ -1,12 +1,15 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./routes/Home";
-import Repositories from "./routes/Repositories";
+import HomeRoute from "./routes/HomeRoute";
+import RepositoriesRoute from "./routes/RepositoriesRoute";
+import RepositoryIssuesRoute from "./routes/RepositoryIssuesRoute";
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/repositories/:user" element={<Repositories />} />
+      <Route path="/" element={<HomeRoute />} />
+      <Route path="/repositories/:user" element={<RepositoriesRoute />} />
+      <Route path="/users/:user/issues/:repo" element={<RepositoryIssuesRoute />} />
     </Routes>
   );
 }

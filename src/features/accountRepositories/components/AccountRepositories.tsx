@@ -29,7 +29,7 @@ export default function AccountRepositories({ user, page, searchQuery }: Account
     queryFn: () => fetchRepos(fetchURL),
   });
 
-  if (isPending) return <Spinner size="large" className="repositories__spinner" />;
+  if (isPending) return <Spinner size="large" className="loading__spinner" />;
   if (isError) return <h1>Error!</h1>;
 
   return (

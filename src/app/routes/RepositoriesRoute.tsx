@@ -3,10 +3,10 @@ import AccountRepositories from "../../features/accountRepositories/components/A
 import PageSwitching from "../../features/accountRepositories/components/PageSwitching";
 import Search from "../../features/accountRepositories/components/Search";
 import { useParams, useSearchParams } from "react-router-dom";
-import axios from "axios";
 import "./Repositories.css";
+import fetchTotalPages from "../../features/accountRepositories/utils/fetchTotalPages";
 
-export default function Repositories() {
+export default function RepositoriesRoute() {
   const { user } = useParams();
   const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
   const page = +searchParams.get("page")!;
@@ -14,22 +14,8 @@ export default function Repositories() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["totalPages", user, searchQuery],
-    queryFn: () => fetchTotalPages(searchQuery),
+    queryFn: () => fetchTotalPages(searchQuery, user),
   });
-
-  async function fetchTotalPages(searchQuery: null | string) {
-    if (searchQuery === null) {
-      const res = await axios.get(`https://api.github.com/users/${user}`);
-      return res.data.public_repos;
-    }
-
-    const res = await axios.get(
-      `https://api.github.com/search/repositories?q=${encodeURIComponent(
-        `${searchQuery} user:${user}`
-      )}&per_page=1`
-    );
-    return res.data.total_count;
-  }
 
   return (
     <section className="repositories">

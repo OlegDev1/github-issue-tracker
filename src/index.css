@@ -79,3 +79,8 @@ body,
 #root {
   height: 100%;
 }
+
+.loading__spinner {
+  position: absolute;
+  top: 40%;
+}
