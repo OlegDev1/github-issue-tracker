@@ -1,13 +1,12 @@
 import "./Nav.css";
 import { Tabs, TabsList, TabsTrigger } from "../../../components/ui/tabs";
-import { SetURLSearchParams } from "react-router-dom";
 import SearchParamsTypes from "../types/searchParams.interface";
 import Label from "../types/label.interface";
 import LabelSelect from "./LabelSelect";
 
 type NavProps = {
   searchParamsObj: SearchParamsTypes;
-  setSearchParams: SetURLSearchParams;
+  setSearchParams: (params: SearchParamsTypes) => void;
   isLoading: boolean;
   labels: Label[];
 };
@@ -41,7 +40,12 @@ export default function Nav({ searchParamsObj, setSearchParams, isLoading, label
         </section>
         <section className="nav__buttons">
           <div className="nav__labels">
-            <LabelSelect isLoading={isLoading} labels={labels} />
+            <LabelSelect
+              isLoading={isLoading}
+              labels={labels}
+              searchParamsObj={searchParamsObj}
+              setSearchParams={setSearchParams}
+            />
           </div>
         </section>
       </nav>

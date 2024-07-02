@@ -15,10 +15,11 @@ type RepositoryIssuesProps = {
 export default function RepositoryIssues({ user, repo, searchParamsObj }: RepositoryIssuesProps) {
   const page = +searchParamsObj.page;
   const status = searchParamsObj.status;
+  const label = searchParamsObj.label;
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["repositoryIssues", user, repo, page, status],
-    queryFn: () => fetchRepositoryIssues(user, repo, page, status),
+    queryKey: ["repositoryIssues", user, repo, page, status, label],
+    queryFn: () => fetchRepositoryIssues(user, repo, page, status, label),
   });
 
   if (isPending) return <Spinner size="large" className="loading__spinner" />;

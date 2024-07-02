@@ -8,6 +8,8 @@ import Nav from "../../features/repositoryIssues/components/Nav";
 import SearchParamsTypes from "../../features/repositoryIssues/types/searchParams.interface";
 import fetchLabels from "../../features/repositoryIssues/utils/fetchLabels";
 
+type setSearchParamsType = (params: SearchParamsTypes) => void;
+
 export default function RepositoryIssuesRoute() {
   const { user } = useParams();
   const { repo } = useParams();
@@ -17,14 +19,15 @@ export default function RepositoryIssuesRoute() {
     searchParams.entries()
   ) as unknown as SearchParamsTypes;
   const status = searchParamsObj.status;
+  const label = searchParamsObj.label;
 
   const {
     data: totalIssuesData,
     isLoading: isIssuesLoading,
     isError: isIssuesError,
   } = useQuery({
-    queryKey: ["totalIssues", user, repo, status],
-    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status),
+    queryKey: ["totalIssues", user, repo, status, label],
+    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status, label),
   });
   const {
     data: labelsData,
@@ -41,7 +44,7 @@ export default function RepositoryIssuesRoute() {
     <section className="issues">
       <Nav
         searchParamsObj={searchParamsObj}
-        setSearchParams={setSearchParams}
+        setSearchParams={setSearchParams as unknown as setSearchParamsType}
         labels={labelsData}
         isLoading={isLabelsLoading}
       />
@@ -53,7 +56,7 @@ export default function RepositoryIssuesRoute() {
       <PageSwithcing
         searchParamsObj={searchParamsObj}
         repoIssues={{ totalIssues: totalIssuesData ?? 0, isLoading: isIssuesLoading }}
-        setSearchParams={setSearchParams}
+        setSearchParams={setSearchParams as unknown as setSearchParamsType}
       />
     </section>
   );

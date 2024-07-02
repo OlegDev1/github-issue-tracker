@@ -6,17 +6,27 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import Label from "../types/label.interface";
+import SearchParamsTypes from "../types/searchParams.interface";
 
 type LabelSelectProps = {
+  searchParamsObj: SearchParamsTypes;
+  setSearchParams: (params: SearchParamsTypes) => void;
   isLoading: boolean;
   labels: Label[];
 };
 
-export default function LabelSelect({ isLoading, labels }: LabelSelectProps) {
+export default function LabelSelect({
+  searchParamsObj,
+  setSearchParams,
+  isLoading,
+  labels,
+}: LabelSelectProps) {
   if (isLoading) return <></>;
 
   return (
-    <Select>
+    <Select
+      onValueChange={(label) => setSearchParams({ ...searchParamsObj, label: label, page: "1" })}
+      value={searchParamsObj.label}>
       <SelectTrigger>
         <SelectValue placeholder="Label" />
       </SelectTrigger>

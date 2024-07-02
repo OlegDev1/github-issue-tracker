@@ -1,4 +1,3 @@
-import { SetURLSearchParams } from "react-router-dom";
 import {
   Pagination,
   PaginationContent,
@@ -16,7 +15,7 @@ type PageSwithcingProps = {
     totalIssues: number;
     isLoading: boolean;
   };
-  setSearchParams: SetURLSearchParams;
+  setSearchParams: (params: SearchParamsTypes) => void;
 };
 
 export default function PageSwithcing({
@@ -27,7 +26,7 @@ export default function PageSwithcing({
   if (repoIssues.isLoading) return <></>;
 
   const page = +searchParamsObj.page;
-  const totalPages = Math.ceil(repoIssues.totalIssues / 30);
+  const totalPages = Math.ceil((repoIssues.totalIssues !== 0 ? repoIssues.totalIssues : 1) / 30);
   const paginationElements = [undefined, undefined, undefined];
 
   return (

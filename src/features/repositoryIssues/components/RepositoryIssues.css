@@ -1,5 +1,5 @@
 .issues__list {
   display: grid;
-  grid-auto-rows: 90px;
+  grid-auto-rows: fit-content(140px);
   gap: 0.5rem;
 }
