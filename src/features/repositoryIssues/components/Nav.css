@@ -10,3 +10,10 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.nav__buttons {
+  flex: 1;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 0.5rem;
+}

@@ -4,8 +4,18 @@ import { Spinner } from "../../../components/ui/loadingSpinner";
 import "./RepositoryIssues.css";
 import Issue from "./Issue";
 import IssueData from "../types/issue.interface";
+import SearchParamsTypes from "../types/searchParams.interface";
 
-export default function RepositoryIssues({ user, repo, page, status }) {
+type RepositoryIssuesProps = {
+  user: string;
+  repo: string;
+  searchParamsObj: SearchParamsTypes;
+};
+
+export default function RepositoryIssues({ user, repo, searchParamsObj }: RepositoryIssuesProps) {
+  const page = +searchParamsObj.page;
+  const status = searchParamsObj.status;
+
   const { data, isPending, isError } = useQuery({
     queryKey: ["repositoryIssues", user, repo, page, status],
     queryFn: () => fetchRepositoryIssues(user, repo, page, status),

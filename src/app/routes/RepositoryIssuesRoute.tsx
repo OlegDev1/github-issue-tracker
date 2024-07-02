@@ -5,29 +5,54 @@ import fetchTotalPages from "../../features/repositoryIssues/utils/fetchTotalPag
 import PageSwithcing from "../../features/repositoryIssues/components/PageSwitching";
 import "./RepositoryIssues.css";
 import Nav from "../../features/repositoryIssues/components/Nav";
+import SearchParamsTypes from "../../features/repositoryIssues/types/searchParams.interface";
+import fetchLabels from "../../features/repositoryIssues/utils/fetchLabels";
 
 export default function RepositoryIssuesRoute() {
   const { user } = useParams();
   const { repo } = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = +searchParams.get("page")!;
-  const status = searchParams.get("status"); //todo: implement open and closed issues
+  const searchParamsObj = Object.fromEntries(
+    searchParams.entries()
+  ) as unknown as SearchParamsTypes;
+  const status = searchParamsObj.status;
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["totalPages", user, repo, status],
-    queryFn: () => fetchTotalPages(user, repo, status),
+  const {
+    data: totalIssuesData,
+    isLoading: isIssuesLoading,
+    isError: isIssuesError,
+  } = useQuery({
+    queryKey: ["totalIssues", user, repo, status],
+    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status),
   });
-  if (isError) return <h1>Error</h1>;
+  const {
+    data: labelsData,
+    isLoading: isLabelsLoading,
+    isError: isLabelsError,
+  } = useQuery({
+    queryKey: ["labels", user, repo],
+    queryFn: () => fetchLabels(user ?? "microsoft", repo ?? ".github"),
+  });
+
+  if (isIssuesError || isLabelsError) return <h1>Error</h1>;
 
   return (
     <section className="issues">
-      <Nav searchParams={searchParams} setSearchParams={setSearchParams} />
-      <RepositoryIssues user={user} repo={repo} page={page} status={status} />
+      <Nav
+        searchParamsObj={searchParamsObj}
+        setSearchParams={setSearchParams}
+        labels={labelsData}
+        isLoading={isLabelsLoading}
+      />
+      <RepositoryIssues
+        user={user ?? "microsoft"}
+        repo={repo ?? ".github"}
+        searchParamsObj={searchParamsObj}
+      />
       <PageSwithcing
-        page={page}
-        repoIssues={{ totalIssues: data, isLoading: isLoading }}
-        searchParams={searchParams}
+        searchParamsObj={searchParamsObj}
+        repoIssues={{ totalIssues: totalIssuesData ?? 0, isLoading: isIssuesLoading }}
         setSearchParams={setSearchParams}
       />
     </section>

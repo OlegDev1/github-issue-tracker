@@ -8,29 +8,27 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../../../components/ui/pagination";
+import SearchParamsTypes from "../types/searchParams.interface";
 
 type PageSwithcingProps = {
-  page: number;
+  searchParamsObj: SearchParamsTypes;
   repoIssues: {
     totalIssues: number;
     isLoading: boolean;
   };
-  searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
 };
 
 export default function PageSwithcing({
-  page,
+  searchParamsObj,
   repoIssues,
-  searchParams,
   setSearchParams,
 }: PageSwithcingProps) {
   if (repoIssues.isLoading) return <></>;
 
+  const page = +searchParamsObj.page;
   const totalPages = Math.ceil(repoIssues.totalIssues / 30);
   const paginationElements = [undefined, undefined, undefined];
-
-  const searchParamsObj = Object.fromEntries(searchParams.entries());
 
   return (
     <Pagination className="pagination">

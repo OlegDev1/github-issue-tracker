@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default async function fetchTotalPages(
-  user,
-  repo,
+  user: string,
+  repo: string,
   status: "opened" | "closed"
 ): Promise<number> {
   const res = await axios.get(
