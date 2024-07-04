@@ -7,6 +7,8 @@ import "./RepositoryIssues.css";
 import Nav from "../../features/repositoryIssues/components/Nav";
 import SearchParamsTypes from "../../features/repositoryIssues/types/searchParams.interface";
 import fetchLabels from "../../features/repositoryIssues/utils/fetchLabels";
+import nextPageParam from "../../features/repositoryIssues/utils/fetchLabelsNextParam";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 type setSearchParamsType = (params: SearchParamsTypes) => void;
 
@@ -29,13 +31,18 @@ export default function RepositoryIssuesRoute() {
     queryKey: ["totalIssues", user, repo, status, label],
     queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status, label),
   });
+
   const {
     data: labelsData,
     isLoading: isLabelsLoading,
     isError: isLabelsError,
-  } = useQuery({
-    queryKey: ["labels", user, repo],
-    queryFn: () => fetchLabels(user ?? "microsoft", repo ?? ".github"),
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["lables", user, repo],
+    queryFn: ({ pageParam }) => fetchLabels(user ?? "microsoft", repo ?? ".github", pageParam),
+    initialPageParam: "1",
+    getNextPageParam: (lastPage) => nextPageParam(lastPage),
   });
 
   if (isIssuesError || isLabelsError) return <h1>Error</h1>;
@@ -47,6 +54,8 @@ export default function RepositoryIssuesRoute() {
         setSearchParams={setSearchParams as unknown as setSearchParamsType}
         labels={labelsData}
         isLoading={isLabelsLoading}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
       <RepositoryIssues
         user={user ?? "microsoft"}

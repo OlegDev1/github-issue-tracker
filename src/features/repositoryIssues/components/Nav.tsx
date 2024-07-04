@@ -9,9 +9,18 @@ type NavProps = {
   setSearchParams: (params: SearchParamsTypes) => void;
   isLoading: boolean;
   labels: Label[];
+  fetchNextPage: () => void;
+  isFetchingNextPage: boolean;
 };
 
-export default function Nav({ searchParamsObj, setSearchParams, isLoading, labels }: NavProps) {
+export default function Nav({
+  searchParamsObj,
+  setSearchParams,
+  isLoading,
+  labels,
+  fetchNextPage,
+  isFetchingNextPage,
+}: NavProps) {
   const status = searchParamsObj.status;
 
   return (
@@ -45,6 +54,8 @@ export default function Nav({ searchParamsObj, setSearchParams, isLoading, label
               labels={labels}
               searchParamsObj={searchParamsObj}
               setSearchParams={setSearchParams}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
             />
           </div>
         </section>
