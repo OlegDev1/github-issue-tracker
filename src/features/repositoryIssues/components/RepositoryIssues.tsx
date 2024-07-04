@@ -23,7 +23,7 @@ export default function RepositoryIssues({ user, repo, searchParamsObj }: Reposi
   });
 
   if (isPending) return <Spinner size="large" className="loading__spinner" />;
-  if (isError) return <h1>Error</h1>;
+  if (isError) return <h1>Network error</h1>;
 
   return (
     <ul className="issues__list">

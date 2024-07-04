@@ -8,25 +8,39 @@ import {
   PaginationPrevious,
 } from "../../../components/ui/pagination";
 import SearchParamsTypes from "../types/searchParams.interface";
+import { useQuery } from "@tanstack/react-query";
+import fetchTotalPages from "../utils/fetchTotalPages";
 
 type PageSwithcingProps = {
   searchParamsObj: SearchParamsTypes;
-  repoIssues: {
-    totalIssues: number;
-    isLoading: boolean;
-  };
   setSearchParams: (params: SearchParamsTypes) => void;
+  user: string;
+  repo: string;
 };
 
 export default function PageSwithcing({
   searchParamsObj,
-  repoIssues,
   setSearchParams,
+  user,
+  repo,
 }: PageSwithcingProps) {
-  if (repoIssues.isLoading) return <></>;
-
+  const status = searchParamsObj.status;
+  const label = searchParamsObj.label;
   const page = +searchParamsObj.page;
-  const totalPages = Math.ceil((repoIssues.totalIssues !== 0 ? repoIssues.totalIssues : 1) / 30);
+
+  const {
+    data: totalIssues,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["totalIssues", user, repo, status, label],
+    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status, label),
+  });
+
+  if (isLoading) return <></>;
+  if (isError || !totalIssues) return <h1>Network error</h1>;
+
+  const totalPages = Math.ceil((totalIssues !== 0 ? totalIssues : 1) / 30);
   const paginationElements = [undefined, undefined, undefined];
 
   return (
