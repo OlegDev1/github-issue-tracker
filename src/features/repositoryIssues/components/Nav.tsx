@@ -2,9 +2,8 @@ import "./Nav.css";
 import { Tabs, TabsList, TabsTrigger } from "../../../components/ui/tabs";
 import SearchParamsTypes from "../types/searchParams.interface";
 import LabelSelect from "./LabelSelect";
-import fetchLabels from "../utils/fetchLabels";
-import nextPageParam from "../utils/fetchLabelsNextParam";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import AssigneesSelect from "./AssigneesSelect";
+import ClearFilters from "./ClearFilters";
 
 type NavProps = {
   searchParamsObj: SearchParamsTypes;
@@ -15,21 +14,8 @@ type NavProps = {
 
 export default function Nav({ searchParamsObj, setSearchParams, user, repo }: NavProps) {
   const status = searchParamsObj.status;
-
-  const {
-    data: labelsData,
-    isLoading: isLabelsLoading,
-    isError: isLabelsError,
-    fetchNextPage: fetchNextLabelsPage,
-    isFetchingNextPage: isFetchingNextLabelsPage,
-  } = useInfiniteQuery({
-    queryKey: ["lables", user, repo],
-    queryFn: ({ pageParam }) => fetchLabels(user ?? "microsoft", repo ?? ".github", pageParam),
-    initialPageParam: "1",
-    getNextPageParam: (lastPage) => nextPageParam(lastPage),
-  });
-
-  if (isLabelsError) return <h1>Network error</h1>;
+  const label = searchParamsObj.label;
+  const assignee = searchParamsObj.assignee;
 
   return (
     <>
@@ -56,14 +42,23 @@ export default function Nav({ searchParamsObj, setSearchParams, user, repo }: Na
           </Tabs>
         </section>
         <section className="nav__buttons">
-          <div className="nav__labels">
-            <LabelSelect
-              isLoading={isLabelsLoading}
-              labels={labelsData}
+          <div className="nav__clearFilters">
+            {(!label && !assignee) || <ClearFilters setSearchParams={setSearchParams} />}
+          </div>
+          <div className="nav__assignees">
+            <AssigneesSelect
               searchParamsObj={searchParamsObj}
               setSearchParams={setSearchParams}
-              fetchNextPage={fetchNextLabelsPage}
-              isFetchingNextPage={isFetchingNextLabelsPage}
+              user={user}
+              repo={repo}
+            />
+          </div>
+          <div className="nav__label">
+            <LabelSelect
+              searchParamsObj={searchParamsObj}
+              setSearchParams={setSearchParams}
+              user={user}
+              repo={repo}
             />
           </div>
         </section>

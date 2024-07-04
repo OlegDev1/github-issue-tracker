@@ -24,21 +24,22 @@ export default function PageSwithcing({
   user,
   repo,
 }: PageSwithcingProps) {
+  const page = +searchParamsObj.page;
   const status = searchParamsObj.status;
   const label = searchParamsObj.label;
-  const page = +searchParamsObj.page;
+  const assignee = searchParamsObj.assignee;
 
   const {
     data: totalIssues,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["totalIssues", user, repo, status, label],
-    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status, label),
+    queryKey: ["totalIssues", user, repo, status, label, assignee],
+    queryFn: () => fetchTotalPages(user ?? "microsoft", repo ?? ".github", status, label, assignee),
   });
 
-  if (isLoading) return <></>;
-  if (isError || !totalIssues) return <h1>Network error</h1>;
+  if (isLoading || !totalIssues) return <></>;
+  if (isError) return <h1>Network error</h1>;
 
   const totalPages = Math.ceil((totalIssues !== 0 ? totalIssues : 1) / 30);
   const paginationElements = [undefined, undefined, undefined];

@@ -16,10 +16,11 @@ export default function RepositoryIssues({ user, repo, searchParamsObj }: Reposi
   const page = +searchParamsObj.page;
   const status = searchParamsObj.status;
   const label = searchParamsObj.label;
+  const assignee = searchParamsObj.assignee;
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["repositoryIssues", user, repo, page, status, label],
-    queryFn: () => fetchRepositoryIssues(user, repo, page, status, label),
+    queryKey: ["repositoryIssues", user, repo, page, status, label, assignee],
+    queryFn: () => fetchRepositoryIssues(user, repo, page, status, label, assignee),
   });
 
   if (isPending) return <Spinner size="large" className="loading__spinner" />;

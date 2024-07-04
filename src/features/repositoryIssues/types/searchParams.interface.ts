@@ -1,5 +1,6 @@
 export default interface SearchParamsTypes {
   page: string;
   status: "opened" | "closed";
-  label: string | undefined;
+  label?: string;
+  assignee?: string;
 }
