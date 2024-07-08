@@ -1,9 +1,9 @@
 import "./AccountRepositories.css";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Spinner } from "../../../components/ui/loadingSpinner";
 import Repository from "./Repository";
 import RepositoryData from "../types/repository.interface";
+import fetchRepos from "../utils/fetchRepos";
 
 type AccountRepositoriesProps = {
   user: string;
@@ -12,21 +12,9 @@ type AccountRepositoriesProps = {
 };
 
 export default function AccountRepositories({ user, page, searchQuery }: AccountRepositoriesProps) {
-  const fetchURL =
-    searchQuery === null
-      ? `https://api.github.com/users/${user}/repos?page=${page}&per_page=30`
-      : `https://api.github.com/search/repositories?q=${encodeURIComponent(
-          `${searchQuery} user:${user}`
-        )}&page=${page}&per_page=30`;
-
-  async function fetchRepos(fetchURL: string) {
-    const resp = await axios.get(fetchURL);
-    return searchQuery === null ? resp.data : resp.data.items;
-  }
-
   const { isPending, isError, data } = useQuery({
     queryKey: ["repositories", user, page, searchQuery],
-    queryFn: () => fetchRepos(fetchURL),
+    queryFn: () => fetchRepos(user, page, searchQuery),
   });
 
   if (isPending) return <Spinner size="large" className="loading__spinner" />;

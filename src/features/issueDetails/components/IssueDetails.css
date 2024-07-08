@@ -1,0 +1,32 @@
+.issue__body-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+.issueDetails__title {
+  font-size: 2.1rem;
+  font-weight: 400;
+}
+.issueDetails__title.title {
+  display: inline;
+}
+.issue__body-paragraph {
+  padding: 0.8rem 0;
+}
+.issue__body-orderedList {
+  margin-left: 1.5rem;
+  list-style-type: decimal;
+}
+.issue__body-listItem {
+  margin: 0.3rem 0;
+}
+.issueDetails__title.number {
+  color: grey;
+  font-weight: 200;
+}
+.issueDetails__nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
