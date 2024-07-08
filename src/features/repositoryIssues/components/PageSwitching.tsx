@@ -48,7 +48,7 @@ export default function PageSwithcing({
     <Pagination className="pagination">
       <PaginationContent>
         {page === 1 || (
-          <PaginationItem>
+          <PaginationItem key="back">
             <PaginationPrevious
               size="default"
               onClick={() => setSearchParams({ ...searchParamsObj, page: String(page - 1) })}
@@ -58,7 +58,7 @@ export default function PageSwithcing({
 
         {paginationElements.map((item, index) => {
           return page + index <= totalPages ? (
-            <PaginationItem>
+            <PaginationItem key={index}>
               {index == 0 ? (
                 <PaginationLink size="default" isActive>
                   {page + index}
@@ -78,10 +78,10 @@ export default function PageSwithcing({
 
         {page + 2 < totalPages && (
           <>
-            <PaginationItem>
+            <PaginationItem key="empty">
               <PaginationEllipsis />
             </PaginationItem>
-            <PaginationItem>
+            <PaginationItem key="totalPages">
               <PaginationLink
                 size="default"
                 onClick={() => setSearchParams({ ...searchParamsObj, page: String(totalPages) })}>
@@ -92,7 +92,7 @@ export default function PageSwithcing({
         )}
 
         {page === totalPages || (
-          <PaginationItem>
+          <PaginationItem key="next">
             <PaginationNext
               size="default"
               onClick={() => setSearchParams({ ...searchParamsObj, page: String(page + 1) })}

@@ -50,7 +50,7 @@ export default function AssigneesSelect({
         <SelectGroup>
           {data.pages.map((page) =>
             page.data.map((item) => (
-              <SelectItem value={item.login} style={{ cursor: "pointer" }}>
+              <SelectItem value={item.login} style={{ cursor: "pointer" }} key={item.login}>
                 <span>{item.login}</span>
               </SelectItem>
             ))

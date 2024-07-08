@@ -30,7 +30,7 @@ export default function RepositoryIssues({ user, repo, searchParamsObj }: Reposi
   return (
     <ul className="issues__list">
       {data.map((item: IssueData) => (
-        <Issue issue={item} user={user} repo={repo} />
+        <Issue issue={item} user={user} repo={repo} key={item.number} />
       ))}
     </ul>
   );

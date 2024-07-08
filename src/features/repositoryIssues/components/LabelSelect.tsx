@@ -48,7 +48,7 @@ export default function LabelSelect({
         <SelectGroup>
           {data.pages.map((page) =>
             page.data.map((item) => (
-              <SelectItem value={item.name} style={{ cursor: "pointer" }}>
+              <SelectItem value={item.name} style={{ cursor: "pointer" }} key={item.name}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   <span
                     style={{

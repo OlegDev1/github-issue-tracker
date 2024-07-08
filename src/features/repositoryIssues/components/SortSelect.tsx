@@ -23,9 +23,15 @@ export default function SortSelect({ searchParamsObj, setSearchParams }: LabelSe
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="created">By date Created</SelectItem>
-        <SelectItem value="updated">By date Updated</SelectItem>
-        <SelectItem value="comments">By Comments count</SelectItem>
+        <SelectItem value="created" key="sortByCreated">
+          By date Created
+        </SelectItem>
+        <SelectItem value="updated" key="sortByUpdated">
+          By date Updated
+        </SelectItem>
+        <SelectItem value="comments" key="sortByComments">
+          By Comments count
+        </SelectItem>
       </SelectContent>
     </Select>
   );

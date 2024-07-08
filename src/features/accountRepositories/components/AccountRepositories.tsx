@@ -23,7 +23,7 @@ export default function AccountRepositories({ user, page, searchQuery }: Account
   return (
     <ul className="repositories__list">
       {data.map((item: RepositoryData) => (
-        <Repository repo={item} />
+        <Repository repo={item} key={item.name} />
       ))}
     </ul>
   );
