@@ -4,6 +4,7 @@ import SearchParamsTypes from "../types/searchParams.interface";
 import LabelSelect from "./LabelSelect";
 import AssigneesSelect from "./AssigneesSelect";
 import ClearFilters from "./ClearFilters";
+import SortSelect from "./SortSelect";
 
 type NavProps = {
   searchParamsObj: SearchParamsTypes;
@@ -16,6 +17,7 @@ export default function Nav({ searchParamsObj, setSearchParams, user, repo }: Na
   const status = searchParamsObj.status;
   const label = searchParamsObj.label;
   const assignee = searchParamsObj.assignee;
+  const sort = searchParamsObj.sort;
 
   return (
     <>
@@ -43,7 +45,10 @@ export default function Nav({ searchParamsObj, setSearchParams, user, repo }: Na
         </section>
         <section className="nav__buttons">
           <div className="nav__clearFilters">
-            {(!label && !assignee) || <ClearFilters setSearchParams={setSearchParams} />}
+            {(!label && !assignee && !sort) || <ClearFilters setSearchParams={setSearchParams} />}
+          </div>
+          <div className="nav__sort">
+            <SortSelect searchParamsObj={searchParamsObj} setSearchParams={setSearchParams} />
           </div>
           <div className="nav__assignees">
             <AssigneesSelect

@@ -3,4 +3,5 @@ export default interface SearchParamsTypes {
   status: "opened" | "closed";
   label?: string;
   assignee?: string;
+  sort?: "created" | "updated" | "comments";
 }
